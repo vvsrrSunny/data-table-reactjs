@@ -26,9 +26,14 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-class PageLayout extends Component() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+class PageLayout extends Component {
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      sidebarOpen : false,
+    };
+  }
   render() {
     return (
       <>
@@ -41,11 +46,11 @@ class PageLayout extends Component() {
         ```
       */}
         <div>
-          <Transition.Root show={sidebarOpen} as={Fragment}>
+          <Transition.Root show={this.state.sidebarOpen} as={Fragment}>
             <Dialog
               as="div"
               className="relative z-40 md:hidden"
-              onClose={setSidebarOpen}
+              onClose = {() => this.setState({ sidebarOpen: false })}
             >
               <Transition.Child
                 as={Fragment}
@@ -83,7 +88,7 @@ class PageLayout extends Component() {
                         <button
                           type="button"
                           className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                          onClick={() => setSidebarOpen(false)}
+                          onClick={() => this.setState({ sidebarOpen: false })}
                         >
                           <span className="sr-only">Close sidebar</span>
                           <XIcon
@@ -211,7 +216,7 @@ class PageLayout extends Component() {
               <button
                 type="button"
                 className="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-                onClick={() => setSidebarOpen(true)}
+                onClick={() => this.setState({ sidebarOpen: true })}
               >
                 <span className="sr-only">Open sidebar</span>
                 <MenuIcon className="h-6 w-6" aria-hidden="true" />
